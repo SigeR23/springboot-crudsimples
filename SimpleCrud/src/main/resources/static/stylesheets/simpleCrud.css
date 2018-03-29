@@ -1,0 +1,27 @@
+hr {
+	border-top: 2px solid rgba(0, 0, 255, .4);
+}
+
+
+.cadastrar-container {
+	
+	width: 50%;
+	
+	margin: 10px auto;
+	padding: 20px;
+	
+	border-radius: 15px;
+	
+	background-color: #efefef;
+	
+}
+
+.table-container {
+	width: 80%;
+	
+	margin: 0 auto;
+}
+
+.table-container > table {
+	width: 100%;
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:simpleCrud="http://SimpleCrud.siger.com">
+	
+	<title>Pessoas</title>
+	
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/vendors/stylesheets/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/simpleCrud.css}">
+	
+	
+</head>
+<body>
+	
+<section>
+<div class="cadastrar-container">
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1 th:if="${pessoa.nova}">Cadastro de Pessoa</h1>
+			<h1 th:unless="${pessoa.nova}" th:text="|Editando: ${pessoa.nome}|"></h1>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+
+		<!--  <div class="alert  alert-danger  alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<i class="fa  fa-exclamation-circle"></i> Já existe um produto com o nome informado.
+		</div> -->
+		
+		<form method="POST" th:object="${pessoa}" class="form-vertical  js-form-loading" th:action="${pessoa.nova} ? @{/pessoas/nova} : @{/pessoas/{codigo}(codigo=${pessoa.codigo})}">
+		<simpleCrud:message/>
+		
+		<input type="hidden" th:field="*{codigo}"/>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label for="nome">Nome</label> 
+						<input id="nome" type="text" class="form-control" th:field="*{nome}"/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+					<label>Tipo Pessoa</label>
+						<div>
+							<th:block th:each="tipoPessoa : ${tiposPessoa}">
+								<div class="form-check form-check-inline">
+									<input class="form-check-input  js-radio-tipo-pessoa" type="radio" name="tipoPessoa" th:id="|id_${tipoPessoa}|" th:value="${tipoPessoa}" data:documento="${tipoPessoa.documento}" data:mascara="${tipoPessoa.mascara}" th:field="*{tipoPessoa}">
+									<label class="form-check-label" th:for="|id_${tipoPessoa}|" th:text="${tipoPessoa.descricao}"></label>
+								</div>
+							</th:block>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-8">
+					<div class="form-group">
+						<label for="cpf-cnpj">CPF/CNPJ</label> 
+						<input id="cpf-cnpj" type="text" class="form-control" th:field="*{cpfOuCnpj}"/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label for="email">E-mail</label> 
+						<input id="email" type="text" class="form-control" th:field="*{email}"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<div class="col-sm-2">
+					<a th:href="@{/pessoas/pesquisar}"><button class="btn  btn-secondary" type="button">Pesquisar</button></a>
+				</div>
+				<div class="col-sm-2 offset-sm-8">
+					<button class="btn  btn-primary text-right" type="submit">Salvar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+	
+
+</section>
+<script th:src="@{/vendors/javascripts/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/vendors/javascripts/jquery.mask.min.js}"></script>
+<script th:src="@{/vendors/javascripts/bootstrap.min.js}"></script>
+<script th:src="@{/vendors/javascripts/sweetalert.min.js}"></script>
+<script th:src="@{/javascripts/pessoa.mascara-cpf-cnpj.js}"></script>
+<script th:src="@{/javascripts/pessoa.excluir.js}"></script>
+
+
+</body>
+</html>

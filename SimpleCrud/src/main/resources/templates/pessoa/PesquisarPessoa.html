@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+		
+	<title>Pessoas</title>
+	
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/vendors/stylesheets/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/simpleCrud.css}">
+	
+	
+</head>
+<body>
+	
+<section class="container">
+	<h1>Lista de Pessoas</h1>
+	<form method="GET" th:action="@{/pessoas/pesquisar}" class="form-vertical js-form-loading aling" th:object="${pessoaFilter}">
+		<div class="col-sm-10 offset-sm-1">
+			<div class="input-group mb-3">
+				<input id="filtro-nome" type="text" class="form-control" th:field="*{nome}" placeholder="Pesquisar pelo nome"/>
+				<div class="input-group-append">
+					<button type="submit" class="btn btn-outline-primary"> <i>&#10140;</i></button>
+				</div>
+			</div>
+		</div>
+	</form>
+<hr/>
+	
+<div class="table-container">
+	<table class="table table-hover table-responsive text-center">
+		<thead>
+			<tr>
+				<th class="col-1">Código</th>
+				<th class="col-3">Nome</th>
+				<th class="col-1">Tipo</th>
+				<th class="col-2">Documento</th>
+				<th class="col-3">e-mail</th>
+				<th  class="col-2  text-center">Editar/Excluir</th>
+			</tr>
+			
+		</thead>
+		<tbody>
+			<tr th:each="pessoa : ${pessoas}">
+				<td th:text="${pessoa.codigo}"></td>
+				<td th:text="${pessoa.nome}"></td>
+				<td th:text="${pessoa.tipoPessoa.descricao}"></td>
+				<td th:text="${pessoa.cpfOuCnpj}"></td>
+				<td th:text="${pessoa.email}"></td>
+				<td>
+					<a class="btn btn-link btn-xs" title="Editar" th:href="@{/pessoas/{codigo}(codigo=${pessoa.codigo})}"><i>&#10000;</i></a>
+					<a class="text-danger btn btn-link js-excluir" href="#" title="Excluir" data:objeto="${pessoa.nome}" data:url="@{/pessoas/{codigo}(codigo=${pessoa.codigo})}">
+						<i>&#10008;</i>
+					</a>
+				</td>	
+			</tr>
+			<tr th:if="${pessoas.empty}">
+				<td colspan="7" class="text-center">Não há registros</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	<hr/>
+	
+	<a class="btn btn-primary" th:href="@{/pessoas/nova}">
+		<span>Novo cadastro</span>
+	</a>	
+</section>
+
+<script th:src="@{/vendors/javascripts/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/vendors/javascripts/jquery.mask.min.js}"></script>
+<script th:src="@{/vendors/javascripts/bootstrap.min.js}"></script>
+<script th:src="@{/vendors/javascripts/sweetalert.min.js}"></script>
+<script th:src="@{/javascripts/pessoa.mascara-cpf-cnpj.js}"></script>
+<script th:src="@{/javascripts/pessoa.excluir.js}"></script>
+
+
+</body>
+</html>
